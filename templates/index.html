@@ -3,878 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Swygen Premium | Next-Gen Downloader</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <title>Swygen Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* -----------------------------------------------------------
-           1. CORE VARIABLES & THEME CONFIGURATION
-        ----------------------------------------------------------- */
         :root {
-            /* Light Theme */
-            --bg-body: #F2F4F8;
+            --bg-body: #F0F2F5;
             --bg-card: #FFFFFF;
-            --bg-glass: rgba(255, 255, 255, 0.85);
-            --text-primary: #1A1D26;
-            --text-secondary: #6B7280;
-            --primary-color: #6366F1; /* Indigo */
-            --primary-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
-            --accent-color: #F43F5E; /* Rose */
-            --success-color: #10B981;
-            --border-light: rgba(0, 0, 0, 0.05);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 12px 30px rgba(99, 102, 241, 0.15);
-            --radius-xl: 24px;
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --font-en: 'Outfit', sans-serif;
-            --font-bn: 'Hind Siliguri', sans-serif;
-            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #6366F1;
+            --primary-grad: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            --text-main: #1F2937;
+            --text-sub: #6B7280;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --radius: 16px;
         }
-
         [data-theme="dark"] {
-            /* Dark Theme */
-            --bg-body: #0F1115;
-            --bg-card: #1C1E26;
-            --bg-glass: rgba(28, 30, 38, 0.85);
-            --text-primary: #FFFFFF;
-            --text-secondary: #9CA3AF;
-            --primary-color: #818CF8;
-            --primary-gradient: linear-gradient(135deg, #6366F1 0%, #A78BFA 100%);
-            --border-light: rgba(255, 255, 255, 0.08);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --bg-body: #111827;
+            --bg-card: #1F2937;
+            --text-main: #F9FAFB;
+            --text-sub: #9CA3AF;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
 
-        /* -----------------------------------------------------------
-           2. GLOBAL RESET & BASE STYLES
-        ----------------------------------------------------------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none; /* App feel */
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; transition: 0.3s; }
+        
+        .app-container { max-width: 480px; margin: 0 auto; width: 100%; background: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; }
 
-        body {
-            font-family: var(--font-en);
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            transition: background-color 0.4s ease, color 0.4s ease;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        /* Header */
+        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 50; }
+        [data-theme="dark"] header { background: rgba(31,41,55,0.8); }
+        .logo { font-size: 20px; font-weight: 800; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .theme-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--bg-card); color: var(--text-main); box-shadow: var(--shadow); cursor: pointer; }
 
-        a { text-decoration: none; color: inherit; }
-        button, input { font-family: inherit; border: none; outline: none; }
+        /* Main */
+        main { padding: 20px; flex: 1; }
+        
+        .banner { height: 160px; border-radius: 20px; background: url('https://images.unsplash.com/photo-1614850523060-8da1d56e37def?w=800&q=80') center/cover; position: relative; margin-bottom: 25px; box-shadow: var(--shadow); overflow: hidden; }
+        .banner::after { content:''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
+        .banner-text { position: absolute; bottom: 20px; left: 20px; color: white; z-index: 2; font-weight: 700; font-size: 18px; }
 
-        /* Smooth Scrolling */
-        html { scroll-behavior: smooth; }
-
-        /* Container for Mobile Centering */
-        .app-container {
-            width: 100%;
-            max-width: 480px; /* Mobile max width */
-            margin: 0 auto;
-            position: relative;
-            background: var(--bg-body);
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* -----------------------------------------------------------
-           3. APP BAR (HEADER)
-        ----------------------------------------------------------- */
-        .app-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--primary-gradient);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-        }
-
-        .brand-text {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            width: 52px;
-            height: 28px;
-            background: rgba(0,0,0,0.05);
-            border-radius: 50px;
-            position: relative;
-            cursor: pointer;
-            border: 1px solid var(--border-light);
-            overflow: hidden;
-        }
-        [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.1); }
-
-        .toggle-thumb {
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            transition: transform 0.4s var(--transition-bounce);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: #F59E0B; /* Sun color */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        [data-theme="dark"] .toggle-thumb {
-            transform: translateX(24px);
-            background: var(--primary-color);
-            color: white; /* Moon color */
-        }
-
-        /* -----------------------------------------------------------
-           4. MAIN CONTENT
-        ----------------------------------------------------------- */
-        main {
-            padding: 20px;
-            flex: 1;
-        }
-
-        /* Hero Banner */
-        .hero-banner {
-            width: 100%;
-            height: 180px;
-            border-radius: var(--radius-xl);
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-lg);
-            animation: fadeInScale 0.8s ease-out;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-        }
-
-        .hero-text {
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 16px;
-            background: var(--primary-color);
-            border-radius: 2px;
-        }
+        .label { font-size: 12px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
 
         /* Service Grid */
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
-        }
+        .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        .s-card { background: var(--bg-card); padding: 15px 5px; border-radius: var(--radius); text-align: center; cursor: pointer; transition: 0.2s; border: 2px solid transparent; box-shadow: var(--shadow); }
+        .s-card i { font-size: 24px; margin-bottom: 5px; display: block; }
+        .s-card span { font-size: 10px; font-weight: 600; }
+        .s-card.active { border-color: var(--primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-3px); }
 
-        .service-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 16px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.2s var(--transition-smooth);
-            border: 2px solid transparent;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .service-card i {
-            font-size: 28px;
-            transition: transform 0.3s var(--transition-bounce);
-        }
+        /* Input Area with Paste Button */
+        .input-box { position: relative; margin-bottom: 20px; display: flex; gap: 10px; }
+        .input-wrapper { position: relative; flex: 1; }
+        .input-wrapper input { width: 100%; padding: 16px 16px 16px 45px; border-radius: var(--radius); border: none; background: var(--bg-card); color: var(--text-main); font-size: 15px; box-shadow: var(--shadow); outline: none; transition: 0.3s; }
+        .input-wrapper input:focus { ring: 2px solid var(--primary); }
+        .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
         
-        .service-card span {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
+        .paste-btn { width: 54px; border: none; border-radius: var(--radius); background: var(--bg-card); color: var(--primary); font-size: 18px; cursor: pointer; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; }
+        .paste-btn:active { transform: scale(0.95); }
 
-        /* Active State */
-        .service-card.active {
-            border-color: var(--primary-color);
-            background: rgba(99, 102, 241, 0.05);
-            transform: translateY(-4px);
-        }
-        .service-card.active i { transform: scale(1.1); }
-        .service-card:active { transform: scale(0.95); }
+        /* Action Button */
+        .main-btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius); background: var(--primary-grad); color: white; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
+        .main-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
-        /* Brand Colors */
-        .fa-facebook { color: #1877F2; }
-        .fa-youtube { color: #FF0000; }
-        .fa-tiktok { color: #000000; }
-        [data-theme="dark"] .fa-tiktok { color: #fff; }
-        .fa-instagram { color: #E1306C; }
+        /* Preview Area */
+        #preview { display: none; margin-top: 30px; animation: slideUp 0.4s ease; }
+        .video-info { display: flex; gap: 15px; background: var(--bg-card); padding: 15px; border-radius: var(--radius); margin-bottom: 20px; align-items: center; box-shadow: var(--shadow); }
+        .thumb { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background: #eee; }
+        .v-details h4 { font-size: 14px; margin-bottom: 5px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .v-details p { font-size: 12px; color: var(--text-sub); }
 
-        /* Input Area */
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
+        .dl-opt { margin-bottom: 10px; background: var(--bg-card); padding: 15px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; cursor: pointer; box-shadow: var(--shadow); transition: 0.2s; }
+        .dl-opt:active { transform: scale(0.98); }
+        .dl-opt div { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+        .badge { font-size: 10px; background: var(--primary); color: white; padding: 4px 8px; border-radius: 6px; }
 
-        .input-field {
-            width: 100%;
-            padding: 18px 20px 18px 50px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            font-size: 16px;
-            color: var(--text-primary);
-            box-shadow: var(--shadow-sm);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
+        /* Footer */
+        footer { padding: 30px; text-align: center; font-size: 12px; color: var(--text-sub); border-top: 1px solid rgba(0,0,0,0.05); background: var(--bg-card); margin-top: auto; }
 
-        .input-field:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 18px;
-        }
-
-        /* Check Button */
-        .btn-check {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary-gradient);
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: transform 0.1s;
-        }
-        .btn-check:active { transform: scale(0.97); }
+        /* Modal */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .m-box { background: var(--bg-card); width: 85%; max-width: 320px; padding: 25px; border-radius: 20px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal.active .m-box { transform: scale(1); }
+        .m-icon { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+        .m-icon.err { background: #fee2e2; color: #ef4444; }
+        .m-icon.ok { background: #d1fae5; color: #10b981; }
+        .m-btn { width: 100%; padding: 12px; margin-top: 20px; border: none; background: var(--text-main); color: var(--bg-body); border-radius: 10px; font-weight: 600; cursor: pointer; }
 
         /* Spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-
-        /* Video Preview Area (Hidden by default) */
-        #previewArea {
-            display: none;
-            margin-top: 30px;
-            animation: slideUp 0.5s ease;
-        }
-
-        .video-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        iframe { width: 100%; height: 100%; border: none; }
-
-        /* Download Options */
-        .download-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .dl-card {
-            background: var(--bg-card);
-            padding: 16px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            transition: 0.3s;
-            border: 1px solid var(--border-light);
-        }
-
-        .dl-card:hover { border-color: var(--primary-color); transform: translateX(5px); }
-
-        .dl-info { display: flex; align-items: center; gap: 12px; }
-        .dl-icon { 
-            width: 40px; height: 40px; 
-            background: rgba(99, 102, 241, 0.1); 
-            border-radius: 10px; 
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary-color);
-        }
-        
-        .dl-text h4 { font-size: 15px; font-weight: 600; }
-        .dl-text p { font-size: 12px; color: var(--text-secondary); }
-
-        .dl-badge {
-            font-size: 10px;
-            font-weight: 700;
-            background: var(--text-primary);
-            color: var(--bg-body);
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
-        /* -----------------------------------------------------------
-           5. BANGLA GUIDE (SCROLL REVEAL)
-        ----------------------------------------------------------- */
-        .guide-section {
-            margin-top: 40px;
-        }
-
-        .step-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.6s var(--transition-smooth);
-        }
-        
-        .step-card.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .step-num {
-            font-family: var(--font-en);
-            font-size: 24px;
-            font-weight: 800;
-            color: rgba(0,0,0,0.05);
-            -webkit-text-stroke: 1px var(--primary-color);
-            min-width: 40px;
-            text-align: center;
-        }
-
-        .step-desc {
-            font-family: var(--font-bn);
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        /* -----------------------------------------------------------
-           6. FOOTER
-        ----------------------------------------------------------- */
-        .app-footer {
-            background: linear-gradient(to top, var(--bg-card), var(--bg-body));
-            padding: 40px 20px 80px 20px;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .footer-logo {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-tagline {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            transition: 0.3s var(--transition-bounce);
-        }
-        .social-btn:hover { transform: translateY(-5px); color: var(--primary-color); }
-
-        /* -----------------------------------------------------------
-           7. MODALS & POPUPS (NO DEFAULT ALERTS)
-        ----------------------------------------------------------- */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-        .modal-overlay.open { opacity: 1; visibility: visible; }
-
-        .modal-box {
-            width: 85%;
-            max-width: 340px;
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
-            transform: scale(0.8);
-            transition: 0.4s var(--transition-bounce);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-        .modal-overlay.open .modal-box { transform: scale(1); }
-
-        .modal-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-        }
-        .modal-icon.error { background: rgba(244, 63, 94, 0.1); color: var(--accent-color); }
-        .modal-icon.download { background: rgba(16, 185, 129, 0.1); color: var(--success-color); }
-
-        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-        .modal-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.5; }
-
-        .modal-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--text-primary);
-            color: var(--bg-body);
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Progress Bar (Fake) */
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background: var(--border-light);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            display: none;
-        }
-        .progress-bar {
-            height: 100%;
-            background: var(--success-color);
-            width: 0%;
-            transition: width 0.2s;
-        }
-
-        /* Animations */
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeInScale { from { opacity: 0; transform: scale(1.05); } to { opacity: 1; transform: scale(1); } }
-
+        .spin { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
-
     <div class="app-container">
-        
-        <header class="app-bar">
-            <div class="brand">
-                <div class="brand-icon"><i class="fa-solid fa-bolt"></i></div>
-                <div class="brand-text">Swygen IT</div>
-            </div>
-            <div class="theme-toggle" onclick="toggleTheme()">
-                <div class="toggle-thumb"><i class="fa-solid fa-sun"></i></div>
-            </div>
+        <header>
+            <div class="logo"><i class="fa-solid fa-bolt"></i> Swygen</div>
+            <button class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
         </header>
 
         <main>
-            <section class="hero-banner">
-                <div class="hero-overlay">
-                    <div class="hero-text">Premium Video Downloader</div>
-                </div>
-            </section>
-
-            <div class="section-title">Select Service</div>
-            <div class="service-grid">
-                <div class="service-card active" onclick="selectService('fb', this)">
-                    <i class="fa-brands fa-facebook"></i>
-                    <span>Facebook</span>
-                </div>
-                <div class="service-card" onclick="selectService('yt', this)">
-                    <i class="fa-brands fa-youtube"></i>
-                    <span>YouTube</span>
-                </div>
-                <div class="service-card" onclick="selectService('tt', this)">
-                    <i class="fa-brands fa-tiktok"></i>
-                    <span>TikTok</span>
-                </div>
-                <div class="service-card" onclick="selectService('ig', this)">
-                    <i class="fa-brands fa-instagram"></i>
-                    <span>Instagram</span>
-                </div>
+            <div class="banner">
+                <div class="banner-text">Premium Downloader</div>
             </div>
 
-            <div class="section-title">Paste Video Link</div>
-            <div class="input-group">
-                <i class="fa-solid fa-link input-icon"></i>
-                <input type="text" class="input-field" id="urlInput" placeholder="Paste link here...">
+            <span class="label">Select Service</span>
+            <div class="services">
+                <div class="s-card active" onclick="setService(this, 'Facebook')"><i class="fa-brands fa-facebook" style="color:#1877F2"></i><span>FB</span></div>
+                <div class="s-card" onclick="setService(this, 'YouTube')"><i class="fa-brands fa-youtube" style="color:#FF0000"></i><span>YT</span></div>
+                <div class="s-card" onclick="setService(this, 'TikTok')"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></div>
+                <div class="s-card" onclick="setService(this, 'Instagram')"><i class="fa-brands fa-instagram" style="color:#E1306C"></i><span>Insta</span></div>
             </div>
 
-            <button class="btn-check" onclick="validateAndFetch()">
+            <span class="label">Video Link</span>
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-link input-icon"></i>
+                    <input type="text" id="url" placeholder="Paste link here...">
+                </div>
+                <button class="paste-btn" onclick="pasteLink()"><i class="fa-solid fa-paste"></i></button>
+            </div>
+
+            <button class="main-btn" onclick="checkLink()">
                 <span id="btnText">CHECK LINK</span>
-                <div class="spinner" id="btnSpinner"></div>
+                <div class="spin" id="btnSpin"></div>
             </button>
 
-            <div id="previewArea">
-                <div class="section-title" style="margin-top: 30px;">Video Preview</div>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=0" title="Video Player"></iframe>
+            <div id="preview">
+                <span class="label">Ready to Download</span>
+                <div class="video-info">
+                    <img src="" id="thumb" class="thumb">
+                    <div class="v-details">
+                        <h4 id="vTitle">Video Title</h4>
+                        <p id="vPlatform">Facebook</p>
+                    </div>
                 </div>
 
-                <div class="section-title">Download Options</div>
-                <div class="download-list">
-                    <div class="dl-card" onclick="initDownload('HD (1080p)', '125 MB')">
-                        <div class="dl-info">
-                            <div class="dl-icon"><i class="fa-solid fa-video"></i></div>
-                            <div class="dl-text">
-                                <h4>HD Quality</h4>
-                                <p>MP4 • 1080p</p>
-                            </div>
-                        </div>
-                        <div class="dl-badge">125 MB</div>
-                    </div>
-                    <div class="dl-card" onclick="initDownload('Standard', '45 MB')">
-                        <div class="dl-info">
-                            <div class="dl-icon"><i class="fa-solid fa-film"></i></div>
-                            <div class="dl-text">
-                                <h4>Normal Quality</h4>
-                                <p>MP4 • 480p</p>
-                            </div>
-                        </div>
-                        <div class="dl-badge">45 MB</div>
-                    </div>
-                    <div class="dl-card" onclick="initDownload('Audio Only', '5 MB')">
-                        <div class="dl-info">
-                            <div class="dl-icon"><i class="fa-solid fa-music"></i></div>
-                            <div class="dl-text">
-                                <h4>Audio Only</h4>
-                                <p>MP3 • 320kbps</p>
-                            </div>
-                        </div>
-                        <div class="dl-badge">5 MB</div>
-                    </div>
+                <div class="dl-opt" onclick="download('HD')">
+                    <div><i class="fa-solid fa-video" style="color:#6366F1"></i> HD Video</div>
+                    <span class="badge">MP4</span>
+                </div>
+                <div class="dl-opt" onclick="download('Audio')">
+                    <div><i class="fa-solid fa-music" style="color:#F43F5E"></i> Audio Only</div>
+                    <span class="badge">MP3/M4A</span>
                 </div>
             </div>
-
-            <div class="guide-section">
-                <div class="section-title">কিভাবে ব্যবহার করবেন</div>
-                
-                <div class="step-card reveal">
-                    <div class="step-num">01</div>
-                    <div class="step-desc">উপরে দেওয়া তালিকা থেকে আপনার কাঙ্ক্ষিত <b>সার্ভিস নির্বাচন করুন</b> (যেমন: Facebook)।</div>
-                </div>
-
-                <div class="step-card reveal">
-                    <div class="step-num">02</div>
-                    <div class="step-desc">অ্যাপ থেকে ভিডিওর লিংক কপি করে <b>ইনপুট বক্সে পেস্ট করুন</b>।</div>
-                </div>
-
-                <div class="step-card reveal">
-                    <div class="step-num">03</div>
-                    <div class="step-desc"><b>CHECK LINK</b> বাটনে ক্লিক করুন এবং ভিডিও লোড হওয়া পর্যন্ত অপেক্ষা করুন।</div>
-                </div>
-
-                <div class="step-card reveal">
-                    <div class="step-num">04</div>
-                    <div class="step-desc">ভিডিওর কোয়ালিটি বা অডিও ফরম্যাট সিলেক্ট করে <b>ডাউনলোড শুরু করুন</b>।</div>
-                </div>
-            </div>
-
         </main>
 
-        <footer class="app-footer">
-            <div class="footer-logo">Swygen IT</div>
-            <div class="footer-tagline">Premium Digital Solutions</div>
-            <div class="social-links">
-                <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="social-btn"><i class="fa-brands fa-telegram"></i></a>
-            </div>
+        <footer>
+            &copy; 2026 Swygen IT. All rights reserved.
         </footer>
     </div>
 
-    <div class="modal-overlay" id="customModal">
-        <div class="modal-box">
-            <div class="modal-icon" id="mIcon"></div>
-            <div class="modal-title" id="mTitle">Title</div>
-            <div class="progress-container" id="pContainer">
-                <div class="progress-bar" id="pBar"></div>
-            </div>
-            <div class="modal-desc" id="mDesc">Description</div>
-            <button class="modal-btn" id="mBtn" onclick="closeModal()">Close</button>
+    <div class="modal" id="modal">
+        <div class="m-box">
+            <div class="m-icon" id="mIcon"></div>
+            <h3 id="mTitle" style="margin-bottom:10px;">Title</h3>
+            <p id="mDesc" style="color:var(--text-sub); font-size:14px;">Desc</p>
+            <button class="m-btn" onclick="closeModal()">Close</button>
         </div>
     </div>
 
-        <script>
-        // --- 1. THEME LOGIC ---
+    <script>
+        // 1. Theme Logic
         function toggleTheme() {
             const html = document.documentElement;
-            const icon = document.querySelector('.toggle-thumb i');
-            if (html.getAttribute('data-theme') === 'light') {
-                html.setAttribute('data-theme', 'dark');
+            const icon = document.querySelector('.theme-btn i');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
                 icon.className = 'fa-solid fa-moon';
             } else {
-                html.setAttribute('data-theme', 'light');
+                html.setAttribute('data-theme', 'dark');
                 icon.className = 'fa-solid fa-sun';
             }
         }
 
-        // --- 2. SERVICE SELECTION ---
-        let currentService = 'fb';
-        function selectService(service, el) {
-            document.querySelectorAll('.service-card').forEach(card => card.classList.remove('active'));
-            el.classList.add('active');
-            currentService = service;
-            
-            const input = document.getElementById('urlInput');
-            input.value = '';
-            input.placeholder = `Paste ${service.toUpperCase()} link here...`;
-            document.getElementById('previewArea').style.display = 'none';
+        // 2. Paste Function
+        async function pasteLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('url').value = text;
+            } catch (err) {
+                showModal('error', 'Permission Error', 'Please allow clipboard access or paste manually.');
+            }
         }
 
-        // --- 3. REAL VALIDATION (API CALL) ---
-        async function validateAndFetch() {
-            const url = document.getElementById('urlInput').value;
+        // 3. UI Helpers
+        function setService(el, name) {
+            document.querySelectorAll('.s-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('url').placeholder = `Paste ${name} link...`;
+            document.getElementById('preview').style.display = 'none';
+        }
+
+        // 4. API Call - Check Link
+        async function checkLink() {
+            const url = document.getElementById('url').value;
             const btnText = document.getElementById('btnText');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const preview = document.getElementById('previewArea');
+            const btnSpin = document.getElementById('btnSpin');
+            const preview = document.getElementById('preview');
 
-            if (url.length < 10) {
-                showModal('error', 'Invalid Link', 'Please paste a valid video URL.');
-                return;
-            }
+            if (url.length < 5) return showModal('error', 'Empty Link', 'Please paste a valid video URL.');
 
-            // Loading UI
             btnText.style.display = 'none';
-            btnSpinner.style.display = 'block';
+            btnSpin.style.display = 'block';
             preview.style.display = 'none';
 
             try {
-                // Call Backend API to get Info
-                const response = await fetch('/api/info', {
+                const res = await fetch('/api/info', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url })
+                    body: JSON.stringify({ url })
                 });
-
-                const data = await response.json();
+                const data = await res.json();
 
                 if (data.status === 'success') {
-                    // Update Preview UI with Real Data
-                    document.getElementById('videoFrame').src = data.thumbnail; // Showing Thumb instead of Iframe for speed
-                    
-                    // Show Preview Area
+                    document.getElementById('thumb').src = data.thumbnail;
+                    document.getElementById('vTitle').innerText = data.title;
+                    document.getElementById('vPlatform').innerText = data.platform;
                     preview.style.display = 'block';
-                    preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    
-                    showModal('download', 'Video Found!', `Title: ${data.title.substring(0, 30)}...`);
-                    setTimeout(closeModal, 2000); // Close auto after 2s
+                    preview.scrollIntoView({ behavior: 'smooth' });
                 } else {
-                    throw new Error(data.message || 'Video not found');
+                    showModal('error', 'Error', data.message);
                 }
-
-            } catch (error) {
-                showModal('error', 'Error', 'Could not fetch video. Check link or privacy settings.');
-                console.error(error);
+            } catch (e) {
+                showModal('error', 'Server Error', 'Failed to connect. Vercel server might be busy.');
             } finally {
                 btnText.style.display = 'block';
-                btnSpinner.style.display = 'none';
+                btnSpin.style.display = 'none';
             }
         }
 
-        // --- 4. REAL DOWNLOAD LOGIC ---
-        function initDownload(qualityLabel, sizeLabel) {
-            const url = document.getElementById('urlInput').value;
-            let qualityParam = 'normal';
-
-            if(qualityLabel.includes('HD')) qualityParam = 'hd';
-            if(qualityLabel.includes('Audio')) qualityParam = 'audio';
-
-            showModal('download', 'Processing...', 'Please wait while server prepares your file.');
+        // 5. API Call - Download
+        function download(quality) {
+            const url = document.getElementById('url').value;
+            const qParam = quality === 'Audio' ? 'audio' : 'normal';
             
-            // Trigger actual download via browser
-            // We use window.location to trigger native download manager
-            const downloadUrl = `/api/download?url=${encodeURIComponent(url)}&quality=${qualityParam}`;
+            showModal('success', 'Downloading...', 'Your download is starting. Check notification bar.');
             
-            // Hidden Iframe method to prevent page reload but trigger download
+            // Invisible Iframe trigger
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
-            iframe.src = downloadUrl;
+            iframe.src = `/api/download?url=${encodeURIComponent(url)}&quality=${qParam}`;
             document.body.appendChild(iframe);
-
-            // Fake progress bar for UX (Since real progress requires WebSockets)
-            const pContainer = document.getElementById('pContainer');
-            const pBar = document.getElementById('pBar');
-            pContainer.style.display = 'block';
-            pBar.style.width = '0%';
-            
-            let w = 0;
-            const intv = setInterval(() => {
-                w += 5;
-                if(w > 90) clearInterval(intv); // Stop at 90, wait for browser download
-                pBar.style.width = w + '%';
-            }, 500);
-
-            // Reset after 10 seconds (Assume download started)
-            setTimeout(() => {
-                clearInterval(intv);
-                pBar.style.width = '100%';
-                document.getElementById('mTitle').innerText = 'Download Started';
-                document.getElementById('mDesc').innerText = 'Check your browser notification bar.';
-                document.getElementById('mBtn').innerText = 'OK';
-                document.getElementById('mBtn').style.display = 'block';
-            }, 8000);
         }
 
-        // --- 5. MODAL SYSTEM ---
+        // 6. Modal System
         function showModal(type, title, desc) {
-            const modal = document.getElementById('customModal');
+            const m = document.getElementById('modal');
             const icon = document.getElementById('mIcon');
-            const pContainer = document.getElementById('pContainer');
-            const mBtn = document.getElementById('mBtn');
-            
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mDesc').innerText = desc;
-            mBtn.style.display = 'block';
-            mBtn.innerText = 'Close';
-            pContainer.style.display = 'none';
-
+            
             if (type === 'error') {
-                icon.className = 'modal-icon error';
-                icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                icon.className = 'm-icon err';
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
             } else {
-                icon.className = 'modal-icon download';
-                icon.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i>';
+                icon.className = 'm-icon ok';
+                icon.innerHTML = '<i class="fa-solid fa-download"></i>';
             }
-            modal.classList.add('open');
+            m.classList.add('active');
         }
-
-        function closeModal() {
-            document.getElementById('customModal').classList.remove('open');
-        }
-
-        // --- 6. ANIMATION ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        function closeModal() { document.getElementById('modal').classList.remove('active'); }
     </script>
-
 </body>
 </html>
