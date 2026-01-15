@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Swygen Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS আগের মতই আছে, শুধু ফাংশনালিটি চেঞ্জ হবে --- */
+        :root {
+            --bg-body: #F0F2F5; --bg-card: #FFFFFF; --primary: #6366F1;
+            --primary-grad: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            --text-main: #1F2937; --text-sub: #6B7280;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.1); --radius: 16px;
+        }
+        [data-theme="dark"] {
+            --bg-body: #111827; --bg-card: #1F2937;
+            --text-main: #F9FAFB; --text-sub: #9CA3AF;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; transition: 0.3s; }
+        
+        .app-container { max-width: 480px; margin: 0 auto; width: 100%; background: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; }
+        
+        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 50; }
+        [data-theme="dark"] header { background: rgba(31,41,55,0.8); }
+        .logo { font-size: 20px; font-weight: 800; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .theme-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--bg-card); color: var(--text-main); box-shadow: var(--shadow); cursor: pointer; }
+
+        main { padding: 20px; flex: 1; }
+        .banner { height: 160px; border-radius: 20px; background: url('https://images.unsplash.com/photo-1614850523060-8da1d56e37def?w=800&q=80') center/cover; position: relative; margin-bottom: 25px; box-shadow: var(--shadow); overflow: hidden; }
+        .banner-text { position: absolute; bottom: 20px; left: 20px; color: white; font-weight: 700; font-size: 18px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        .label { font-size: 12px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        .s-card { background: var(--bg-card); padding: 15px 5px; border-radius: var(--radius); text-align: center; cursor: pointer; transition: 0.2s; border: 2px solid transparent; box-shadow: var(--shadow); }
+        .s-card i { font-size: 24px; margin-bottom: 5px; display: block; }
+        .s-card span { font-size: 10px; font-weight: 600; }
+        .s-card.active { border-color: var(--primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-3px); }
+
+        .input-box { position: relative; margin-bottom: 20px; display: flex; gap: 10px; }
+        .input-wrapper { position: relative; flex: 1; }
+        .input-wrapper input { width: 100%; padding: 16px 16px 16px 45px; border-radius: var(--radius); border: none; background: var(--bg-card); color: var(--text-main); font-size: 15px; box-shadow: var(--shadow); outline: none; }
+        .input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-sub); }
+        .paste-btn { width: 54px; border: none; border-radius: var(--radius); background: var(--bg-card); color: var(--primary); font-size: 18px; cursor: pointer; box-shadow: var(--shadow); }
+
+        .main-btn { width: 100%; padding: 16px; border: none; border-radius: var(--radius); background: var(--primary-grad); color: white; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        /* Preview Area */
+        #preview { display: none; margin-top: 30px; animation: slideUp 0.4s ease; }
+        .success-card { background: var(--bg-card); padding: 20px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow); }
+        .success-icon { width: 60px; height: 60px; background: #d1fae5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 15px; }
+        
+        .dl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .dl-btn { padding: 12px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .dl-vid { background: var(--primary); color: white; }
+        .dl-aud { background: #fee2e2; color: #ef4444; }
+
+        /* Modal & Spinner */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .m-box { background: var(--bg-card); width: 85%; max-width: 320px; padding: 25px; border-radius: 20px; text-align: center; }
+        .m-btn { width: 100%; padding: 12px; margin-top: 20px; border: none; background: var(--text-main); color: var(--bg-body); border-radius: 10px; font-weight: 600; cursor: pointer; }
+        
+        .spin { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        footer { padding: 30px; text-align: center; font-size: 12px; color: var(--text-sub); border-top: 1px solid rgba(0,0,0,0.05); background: var(--bg-card); margin-top: auto; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo"><i class="fa-solid fa-bolt"></i> Swygen</div>
+            <button class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+        </header>
+
+        <main>
+            <div class="banner"><div class="banner-text">Ultra Fast Downloader</div></div>
+
+            <span class="label">Select Service</span>
+            <div class="services">
+                <div class="s-card active" onclick="setService(this, 'Facebook')"><i class="fa-brands fa-facebook" style="color:#1877F2"></i><span>FB</span></div>
+                <div class="s-card" onclick="setService(this, 'YouTube')"><i class="fa-brands fa-youtube" style="color:#FF0000"></i><span>YT</span></div>
+                <div class="s-card" onclick="setService(this, 'TikTok')"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></div>
+                <div class="s-card" onclick="setService(this, 'Instagram')"><i class="fa-brands fa-instagram" style="color:#E1306C"></i><span>Insta</span></div>
+            </div>
+
+            <span class="label">Paste Video Link</span>
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-link input-icon"></i>
+                    <input type="text" id="url" placeholder="Paste link here...">
+                </div>
+                <button class="paste-btn" onclick="pasteLink()"><i class="fa-solid fa-paste"></i></button>
+            </div>
+
+            <button class="main-btn" onclick="processVideo('video')">
+                <span id="btnText">DOWNLOAD VIDEO</span>
+                <div class="spin" id="btnSpin"></div>
+            </button>
+
+            <div id="preview">
+                <div class="success-card">
+                    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                    <h3>Video Ready!</h3>
+                    <p style="color:var(--text-sub); font-size:13px; margin-top:5px;">Your file has been processed successfully.</p>
+                    
+                    <div class="dl-grid">
+                        <button class="dl-btn dl-vid" onclick="startDownload()">
+                            <i class="fa-solid fa-video"></i> Save Video
+                        </button>
+                        <button class="dl-btn dl-aud" onclick="processVideo('audio')">
+                            <i class="fa-solid fa-music"></i> Save Audio
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>&copy; 2026 Swygen IT.</footer>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="m-box">
+            <h3 id="mTitle">Error</h3>
+            <p id="mDesc" style="color:var(--text-sub); font-size:14px; margin-top:10px;">Desc</p>
+            <button class="m-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let finalDownloadUrl = "";
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.querySelector('.theme-btn i');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+            }
+        }
+
+        async function pasteLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('url').value = text;
+            } catch (err) { alert("Please paste manually"); }
+        }
+
+        function setService(el, name) {
+            document.querySelectorAll('.s-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('url').placeholder = `Paste ${name} link...`;
+            document.getElementById('preview').style.display = 'none';
+        }
+
+        async function processVideo(type) {
+            const url = document.getElementById('url').value;
+            const btnText = document.getElementById('btnText');
+            const btnSpin = document.getElementById('btnSpin');
+            
+            if (url.length < 5) return showModal('Invalid Link', 'Please paste a valid video URL.');
+
+            // UI Loading
+            if(type === 'video') {
+                btnText.style.display = 'none';
+                btnSpin.style.display = 'block';
+                document.getElementById('preview').style.display = 'none';
+            } else {
+                showModal('Processing Audio', 'Converting to MP3...');
+            }
+
+            const endpoint = type === 'video' ? '/api/process' : '/api/process-audio';
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    if (type === 'video') {
+                        finalDownloadUrl = data.download_url;
+                        document.getElementById('preview').style.display = 'block';
+                    } else {
+                        // Audio Direct Download
+                        window.location.href = data.download_url;
+                        closeModal();
+                    }
+                } else {
+                    showModal('Failed', data.message || 'Could not fetch video.');
+                }
+            } catch (e) {
+                showModal('Server Error', 'Please check your internet connection.');
+            } finally {
+                if(type === 'video') {
+                    btnText.style.display = 'block';
+                    btnSpin.style.display = 'none';
+                }
+            }
+        }
+
+        function startDownload() {
+            if(finalDownloadUrl) {
+                window.location.href = finalDownloadUrl;
+            }
+        }
+
+        function showModal(title, desc) {
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mDesc').innerText = desc;
+            document.getElementById('modal').classList.add('active');
+        }
+        function closeModal() { document.getElementById('modal').classList.remove('active'); }
+    </script>
+</body>
+</html>
